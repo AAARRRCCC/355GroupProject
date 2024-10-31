@@ -4,7 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.sql.DriverManager;
 
 //change the multiple methods into one method that varies the string query depending on the menu instruction chosen
 //pls ignore how bulky this is, it will be streamlined later
@@ -12,7 +12,7 @@ public class PatientDBService {
 
     public static List<PatientType> searchPatientName(String fName, String lname) throws SQLException {
         List<PatientType> patients = new ArrayList<>();
-        String query = "select * from patient WHERE fname=? AND lname=?";
+        String query = "select * from Patients WHERE fname=? AND lname=?";
 
         try (Connection connect = DatabaseConnection.getConnection();
         PreparedStatement stmt = connect.prepareStatement(query)) {

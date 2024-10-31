@@ -140,7 +140,7 @@ public class Main {
 
     //GUI TEAM: These are the search functions, They take the specific patient search param, finds all matches
     // and then returns a String array of the first and last names of all matches VVVVVVVV
-
+    // changed to now pass back patient id as well
     public static String[] basicPatientSearch(String fname, String lname) throws SQLException {
 
         List<PatientType> patients = PatientDBService.searchPatientName(fname, lname);
@@ -149,7 +149,7 @@ public class Main {
         if (!patients.isEmpty()) {
             for (int i = 0; i < patients.size(); i++) {
                 PatientType patient = patients.get(i);
-                String fullname = patient.getPatientFName() + " " + patient.getPatientLName();
+                String fullname = patient.getPatientFName() + " " + patient.getPatientLName() + " " + patient.getMRN();
                 patientNames[i] = fullname;
             }
         }
@@ -163,7 +163,7 @@ public class Main {
         if (!patients.isEmpty()) {
             for (int i = 0; i < patients.size(); i++) {
                 PatientType patient = patients.get(i);
-                String fullname = patient.getPatientFName() + " " + patient.getPatientLName();
+                String fullname = patient.getPatientFName() + " " + patient.getPatientLName() + " " + patient.getMRN();
                 patientNames[i] = fullname;
             }
         }
@@ -178,7 +178,7 @@ public class Main {
         if (!patients.isEmpty()) {
             for (int i = 0; i < patients.size(); i++) {
                 PatientType patient = patients.get(i);
-                String fullname = patient.getPatientFName() + " " + patient.getPatientLName();
+                String fullname = patient.getPatientFName() + " " + patient.getPatientLName() + " " + patient.getMRN();
                 patientNames[i] = fullname;
             }
         }
@@ -192,7 +192,7 @@ public class Main {
             //System.out.printf("Patients found at %s\n", search);
             for (int i = 0; i < patients.size(); i++) {
                 PatientType patient = patients.get(i);
-                String fullname = patient.getPatientFName() + " " + patient.getPatientLName();
+                String fullname = patient.getPatientFName() + " " + patient.getPatientLName() + " " + patient.getMRN();
                 patientNames[i] = fullname;
             }
         }
@@ -206,7 +206,7 @@ public class Main {
             //System.out.printf("Patients found at %s\n", search);
             for (int i = 0; i < patients.size(); i++) {
                 PatientType patient = patients.get(i);
-                String fullname = patient.getPatientFName() + " " + patient.getPatientLName();
+                String fullname = patient.getPatientFName() + " " + patient.getPatientLName() + " " + patient.getMRN();
                 patientNames[i] = fullname;
             }
         }
@@ -218,14 +218,19 @@ public class Main {
     //This is the function that returns one specific patients information
     //Call this when the user has selected the specific patient from the search results returned in the searchSelect() mehtod
     //listed below this one.
-    public static String[] ptnSelected(PatientType ptn) throws SQLException {
+    public static String[] ptnSelected(String ptn) throws SQLException {
+        String parts[] = ptn.split(" ",3);
+        String mrn = parts[3];
+        //PatientType patient = mrnSearch(mrn);
+        List<PatientType> patients = PatientDBService.searchPatientsByMRN(mrn);
+        PatientType newpatient = patients.get(0);
         String ptnInfo[] = new String[5];
-        ptnInfo[0] = ptn.getPatientLName() + " " + ptn.getPatientFName();
-        ptnInfo[1] = ptn.getMRN();
-        ptnInfo[2] = ptn.getRoomNumber();
-        ptnInfo[3] = ptn.getPcpString();
-        ptnInfo[4] = ptn.getEvent();
-        ptnInfo[5] = ptn.getChart();
+        ptnInfo[0] = newpatient.getPatientLName() + " " + newpatient.getPatientFName();
+        ptnInfo[1] = newpatient.getMRN();
+        ptnInfo[2] = newpatient.getRoomNumber();
+        ptnInfo[3] = newpatient.getPcpString();
+        ptnInfo[4] = newpatient.getEvent();
+        ptnInfo[5] = newpatient.getChart();
         return ptnInfo;
     }
 
@@ -233,7 +238,7 @@ public class Main {
     //This is the method that allows the user to select which search type they want to use
     public static String[]  searchSelect(String searchType, String searchParam) throws SQLException {
         switch (searchType) {
-            case "LastNameFirstName":
+            case "Last Name First Name":
                 String parts[] = searchParam.split(" ", 2);
                 String lastName = parts[0];
                 String firstName = parts[1];
