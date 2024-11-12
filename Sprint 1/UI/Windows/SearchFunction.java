@@ -23,6 +23,8 @@ import javax.swing.JComboBox;
 import java.awt.GridLayout;
 
 import UI.Parts.Button;
+import src.Main.searchSelect;
+import src.Main.ptnSelected;
 
 public class SearchFunction {
 
@@ -126,21 +128,21 @@ public class SearchFunction {
 				String searchType = (String) advList.getSelectedItem();
 				String searchParam = searchBar.getText();
 				//TODO
-				//String names[] = searchSelect(searchType, searchParam);
-				String tempNames[] = {"Doe John 1", "Doe John 1", "Doe John 1", "Doe John 1", "Doe John 1"};
-				populateScrollPane(tempNames);
+				String names[] = searchSelect(searchType, searchParam);
+				// String names[] = {"Doe John 1", "Doe John 1", "Doe John 1", "Doe John 1", "Doe John 1"};
+				populateScrollPane(names);
             }
         });
 	}
 
-	private void addGetPatientDataFunction(JButton button){
+	private void addGetPatientDataFunction(Button button){
 		button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 				//TODO
-				//String patientData[] = ptnSelected(button.getText(), button.getID());
-				String tempPatientData[] = {"Doe John", "1110001111", "121", "Jacob Alexander", "", ""};
-				PatientData.main(tempPatientData);
+				String patientData[] = ptnSelected(button.getText(), button.getID());
+				// String patientData[] = {"Doe John", "1110001111", "121", "Jacob Alexander", "", ""};
+				PatientData.main(patientData);
 				frame.dispose();
             }
         });

@@ -12,7 +12,7 @@ public class Button extends JButton{
         this.ID = ID;
     }
 
-    protected String getID(){
+    public String getID(){
         return this.ID;
     }
 }
